@@ -1,0 +1,11 @@
+#排除数据集
+/dataset/test
+/dataset/train
+/dataset/val
+*.log
+/model/__pycache__
+/results
+/dataset/REDS
+/util/__pycache__
+/learner/__pycache__
+/dataset/__pycache__
