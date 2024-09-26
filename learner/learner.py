@@ -222,7 +222,7 @@ class StandardLearner():
                 with self.summary.as_default(step=self.step):
                     logger.info(f'Step {self.step} train loss: {loss}')
                     tf.summary.scalar('train_loss', loss)
-                    tf.summary.scalar('learning_rate', self.optimizer.lr(self.optimizer.iterations))
+                    tf.summary.scalar('learning_rate', self.optimizer.learning_rate)
                     tf.summary.image('pred', [pred[0] / 255.0])
                     tf.summary.image(
                         'input',
