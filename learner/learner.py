@@ -222,7 +222,12 @@ class StandardLearner():
                 with self.summary.as_default(step=self.step):
                     logger.info(f'Step {self.step} train loss: {loss}')
                     tf.summary.scalar('train_loss', loss)
-                    current_learning_rate = self.optimizer.learning_rate(self.optimizer.iterations)
+                    # 如果 learning_rate 是调度器，获取当前的学习率
+                    if isinstance(self.optimizer.learning_rate, tf.keras.optimizers.schedules.LearningRateSchedule):
+                        current_learning_rate = self.optimizer.learning_rate(self.optimizer.iterations)
+                    else:
+                        # 如果 learning_rate 是静态值，直接获取
+                        current_learning_rate = self.optimizer.learning_rate
                     tf.summary.scalar('learning_rate', current_learning_rate)
                     tf.summary.image('pred', [pred[0] / 255.0])
                     tf.summary.image(
