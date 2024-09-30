@@ -10,7 +10,7 @@ from learner.saver import Saver
 from learner.metric import PSNR, SSIM
 from util import common_util, constant_util, logger
 
-# import gc  # 引入gc模块
+import gc  # 引入gc模块
 
 class StandardLearner():
     """Implement the standard learner.
@@ -237,9 +237,9 @@ class StandardLearner():
                     tf.summary.image('target', [data_pair[1][0, -1, ...] / 255.0])
                 self.summary.flush()
                  # 清理计算图
-                # tf.keras.backend.clear_session()
-                # # 手动回收内存
-                # gc.collect()
+                tf.keras.backend.clear_session()
+                # 手动回收内存
+                gc.collect()
 
             # save checkpoint every n steps
             if self.step % self.keep_ckpt_steps == 0:
@@ -256,16 +256,16 @@ class StandardLearner():
 
                 # log the validation results
                 self.log_metric('Val_')
-                #  # 清理计算图
-                # tf.keras.backend.clear_session()
-                # # 手动回收内存
-                # gc.collect()
+                 # 清理计算图
+                tf.keras.backend.clear_session()
+                # 手动回收内存
+                gc.collect()
 
         # save the checkpoint after finishing training
         self.saver.save_checkpoint()
-        #  # 清理计算图
-        # tf.keras.backend.clear_session()
-        # gc.collect()  # 最后清理一次内存
+         # 清理计算图
+        tf.keras.backend.clear_session()
+        gc.collect()  # 最后清理一次内存
 
     def test(self):
         """Evaluate the model."""
@@ -289,6 +289,6 @@ class StandardLearner():
 
         # log the evaluation results
         self.log_metric('Test_')
-        # # 清理计算图
-        # tf.keras.backend.clear_session()
-        # gc.collect()  # 清理内存
+        # 清理计算图
+        tf.keras.backend.clear_session()
+        gc.collect()  # 清理内存
