@@ -50,6 +50,12 @@ class MobileRRN(tf.keras.Model):
             self.base_channels, kernel_size=3, strides=1, padding='SAME', activation='relu'
         )
 
+    def build(self, input_shape):
+        """该方法会在模型第一次接收输入时被调用，用来初始化模型的权重和变量。
+        """
+        # 这里可以手动检查或初始化特定变量，但一般情况下 TensorFlow 会自动处理。
+        super().build(input_shape)
+        
     def call(self, inputs, training=False):
         """前向传播。
 
